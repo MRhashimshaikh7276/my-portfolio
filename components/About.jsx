@@ -4,13 +4,21 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import Odometer from "./Odometer";
-import { fadeUp, viewport } from "@/lib/animations";
+import { fadeUp, staggerContainer, viewport } from "@/lib/animations";
 
 const stats = [
   { value: 2, suffix: "+", label: "Year Experience" },
   { value: 3, suffix: "+", label: "Major Projects" },
   { value: null, display: "MERN", label: "Stack" },
   { value: 100, suffix: "%", label: "Passion" },
+];
+
+const softSkills = [
+  "Problem Solving",
+  "Logical Thinking",
+  "Good Communication",
+  "Team Collaboration",
+  "Quick Learner",
 ];
 
 function Counter({ value, suffix }) {
@@ -46,11 +54,31 @@ export default function About() {
   return (
     <section id="about" className="relative px-6 py-28 sm:px-10 lg:px-16">
       <div className="mx-auto grid max-w-6xl gap-16 lg:grid-cols-2 lg:gap-12">
-        <SectionHeading
-          eyebrow="About Me"
-          title="Engineering thoughtful, production-ready software."
-          subtitle="I'm a Full Stack Developer specializing in the MERN stack. I build scalable backend APIs, responsive interfaces and production-ready web applications with a strong focus on clean code, usability and performance."
-        />
+        <div>
+          <SectionHeading
+            eyebrow="About Me"
+            title="Engineering thoughtful, production-ready software."
+            subtitle="I'm a Full Stack Developer specializing in the MERN stack. I build scalable backend APIs, responsive interfaces and production-ready web applications with a strong focus on clean code, usability and performance."
+          />
+
+          <motion.ul
+            variants={staggerContainer(0.06, 0.3)}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+            className="mt-7 flex flex-wrap gap-2"
+          >
+            {softSkills.map((skill) => (
+              <motion.li
+                key={skill}
+                variants={fadeUp}
+                className="rounded-full border border-border bg-foreground/3 px-3.5 py-1.5 text-xs font-medium text-muted"
+              >
+                {skill}
+              </motion.li>
+            ))}
+          </motion.ul>
+        </div>
 
         <div className="grid grid-cols-2 gap-5">
           {stats.map((stat, i) => (

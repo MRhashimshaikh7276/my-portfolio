@@ -5,6 +5,7 @@ import CustomCursor from "@/components/CustomCursor";
 import Preloader from "@/components/Preloader";
 import ScrollProgress from "@/components/ScrollProgress";
 import AmbientBackground from "@/components/AmbientBackground";
+import FloatingResumeButton from "@/components/FloatingResumeButton";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -84,6 +85,7 @@ export default function RootLayout({ children }) {
         <ScrollProgress />
         <Preloader />
         <CustomCursor />
+        <FloatingResumeButton />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

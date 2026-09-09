@@ -3,7 +3,15 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeading from "./SectionHeading";
-import { fadeUp, viewport } from "@/lib/animations";
+import { fadeUp, staggerContainer, viewport } from "@/lib/animations";
+
+const responsibilities = [
+  "Developing and maintaining full-stack web applications using React, Node.js, Express.js and MongoDB.",
+  "Building secure and scalable REST APIs and integrating them with frontend applications.",
+  "Working on live production websites and handling real client requirements.",
+  "Implementing responsive UI designs and optimizing application performance.",
+  "Collaborating with team members to debug issues and deliver features on time.",
+];
 
 export default function Experience() {
   const containerRef = useRef(null);
@@ -11,7 +19,7 @@ export default function Experience() {
     target: containerRef,
     offset: ["start 80%", "end 60%"],
   });
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
     <section id="experience" className="relative px-6 py-28 sm:px-10 lg:px-16">
@@ -21,8 +29,8 @@ export default function Experience() {
         <div ref={containerRef} className="relative mt-16 max-w-3xl pl-10 sm:pl-14">
           <div className="absolute left-0 top-1 h-full w-px bg-border" aria-hidden="true" />
           <motion.div
-            style={{ height: lineHeight }}
-            className="absolute left-0 top-1 w-px bg-accent shadow-[0_0_12px_rgba(62,225,255,0.6)]"
+            style={{ scaleY: lineScale, transformOrigin: "top" }}
+            className="absolute left-0 top-1 h-full w-px bg-accent shadow-[0_0_12px_rgba(62,225,255,0.6)]"
             aria-hidden="true"
           />
 
@@ -46,12 +54,27 @@ export default function Experience() {
             <p className="mt-1 text-sm font-medium uppercase tracking-[0.15em] text-muted">
               2+ Years Experience
             </p>
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted sm:text-base">
-              Developing and maintaining full-stack web applications using React,
-              Node.js, Express.js and MongoDB. Building secure REST APIs,
-              responsive interfaces and production-ready features while working
-              with real client requirements.
-            </p>
+            <motion.ul
+              variants={staggerContainer(0.08, 0.1)}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewport}
+              className="mt-5 flex max-w-xl flex-col gap-3"
+            >
+              {responsibilities.map((item) => (
+                <motion.li
+                  key={item}
+                  variants={fadeUp}
+                  className="flex items-start gap-3 text-sm leading-relaxed text-muted sm:text-base"
+                >
+                  <span
+                    className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent"
+                    aria-hidden="true"
+                  />
+                  {item}
+                </motion.li>
+              ))}
+            </motion.ul>
           </motion.div>
         </div>
       </div>

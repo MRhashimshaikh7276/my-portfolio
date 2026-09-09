@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Check, Mail, Phone } from "lucide-react";
+import { ArrowUpRight, Check, Mail, MapPin, Phone } from "lucide-react";
 import GithubMark from "./icons/GithubMark";
 import MagneticButton from "./MagneticButton";
 import RevealText from "./RevealText";
@@ -11,6 +11,7 @@ import { fadeUp, viewport } from "@/lib/animations";
 const EMAIL = "hashimshaikh7276@gmail.com";
 const PHONE = "9146787689";
 const GITHUB = "https://github.com/MRhashimshaikh";
+const LOCATION = "Nandgaon, Nashik, Maharashtra";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -114,6 +115,12 @@ export default function Contact() {
                 github.com/MRhashimshaikh
               </span>
             </a>
+            <div className="flex items-center gap-3 text-sm text-foreground sm:text-base">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-accent">
+                <MapPin size={16} />
+              </span>
+              <span>{LOCATION}</span>
+            </div>
           </motion.div>
         </div>
 
