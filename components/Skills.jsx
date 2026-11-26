@@ -28,6 +28,7 @@ const categories = [
       { name: "React", icon: Blocks },
       { name: "Next.js", icon: Layers },
       { name: "JavaScript", icon: Braces },
+      { name: "TypeScript", icon: FileCode2 },
       { name: "HTML", icon: FileCode2 },
       { name: "CSS", icon: Palette },
       { name: "SCSS", icon: Palette },

@@ -62,20 +62,34 @@ export default function ProjectCard({ project, index }) {
             className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110"
             style={{ background: project.gradient }}
           />
+          {project.image && (
+            <>
+              <img
+                src={project.image}
+                alt={`${project.name} website homepage`}
+                loading="lazy"
+                className="absolute inset-0 h-full w-full object-cover object-top transition-[transform,filter] duration-700 ease-out group-hover:scale-110 group-hover:brightness-[1.08]"
+              />
+              {/* Readability overlay — fades a little on hover so the screenshot pops */}
+              <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/15 to-black/35 opacity-100 transition-opacity duration-500 group-hover:opacity-65" />
+            </>
+          )}
           <div className={`absolute inset-0 bg-linear-to-br ${project.accent}`} />
-          <div className="grid-bg absolute inset-0 opacity-40" />
+          {!project.image && <div className="grid-bg absolute inset-0 opacity-40" />}
 
-          {/* Mouse-follow spotlight/glare */}
-          <motion.div
-            aria-hidden="true"
-            className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at var(--spot-x) var(--spot-y), rgba(255,255,255,0.22), transparent 55%)",
-              "--spot-x": spotlightX,
-              "--spot-y": spotlightY,
-            }}
-          />
+          {/* Mouse-follow spotlight — only on gradient (non-image) cards */}
+          {!project.image && (
+            <motion.div
+              aria-hidden="true"
+              className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle at var(--spot-x) var(--spot-y), rgba(255,255,255,0.22), transparent 55%)",
+                "--spot-x": spotlightX,
+                "--spot-y": spotlightY,
+              }}
+            />
+          )}
 
           <div className="absolute inset-0 flex items-end justify-between p-6 sm:p-8">
             <span className="font-display text-6xl font-bold text-white/10 sm:text-8xl">

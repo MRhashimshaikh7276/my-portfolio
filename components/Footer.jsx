@@ -14,7 +14,7 @@ export default function Footer() {
         </div>
 
         <a
-          href="https://github.com/MRhashimshaikh"
+          href="https://github.com/MRhashimshaikh7276"
           target="_blank"
           rel="noopener noreferrer"
           data-cursor="VIEW"

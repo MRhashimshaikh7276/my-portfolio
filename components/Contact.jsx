@@ -10,8 +10,8 @@ import { fadeUp, viewport } from "@/lib/animations";
 
 const EMAIL = "hashimshaikh7276@gmail.com";
 const PHONE = "9146787689";
-const GITHUB = "https://github.com/MRhashimshaikh";
-const LOCATION = "Nandgaon, Nashik, Maharashtra";
+const GITHUB = "https://github.com/MRhashimshaikh7276";
+const LOCATION = "Nashik, Maharashtra";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -112,7 +112,7 @@ export default function Contact() {
                 <GithubMark size={16} />
               </span>
               <span className="border-b border-transparent group-hover:border-foreground/40">
-                github.com/MRhashimshaikh
+                github.com/MRhashimshaikh7276
               </span>
             </a>
             <div className="flex items-center gap-3 text-sm text-foreground sm:text-base">
