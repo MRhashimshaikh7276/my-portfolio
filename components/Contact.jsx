@@ -22,21 +22,27 @@ export default function Contact() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (status !== "idle") return;
+    if (status === "sending") return;
 
-    setStatus("sent");
-    const subject = encodeURIComponent(`Portfolio inquiry from ${form.name || "a visitor"}`);
-    const body = encodeURIComponent(
-      `${form.message}\n\n— ${form.name}\n${form.email}`
-    );
+    setStatus("sending");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
-    setTimeout(() => {
-      window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
-    }, 900);
+      if (!res.ok) throw new Error("Request failed");
 
-    setTimeout(() => setStatus("idle"), 2600);
+      setStatus("sent");
+      setForm({ name: "", email: "", message: "" });
+      setTimeout(() => setStatus("idle"), 4000);
+    } catch {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 4000);
+    }
   };
 
   return (
@@ -182,13 +188,25 @@ export default function Contact() {
           <MagneticButton
             as="button"
             type="submit"
-            cursorLabel={status === "sent" ? "" : "SEND"}
+            cursorLabel={status === "idle" ? "SEND" : ""}
             aria-live="polite"
-            disabled={status !== "idle"}
+            disabled={status === "sending"}
             className="relative mt-2 inline-flex h-11.5 items-center justify-center gap-2 overflow-hidden rounded-full bg-foreground px-7 text-xs font-semibold uppercase tracking-[0.2em] text-background disabled:cursor-default"
           >
             <AnimatePresence mode="wait" initial={false}>
-              {status === "sent" ? (
+              {status === "sending" ? (
+                <motion.span
+                  key="sending"
+                  initial={{ y: 24, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -24, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex items-center gap-2"
+                >
+                  <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-background/30 border-t-background" />
+                  Sending
+                </motion.span>
+              ) : status === "sent" ? (
                 <motion.span
                   key="sent"
                   initial={{ y: 24, opacity: 0 }}
@@ -205,7 +223,19 @@ export default function Contact() {
                   >
                     <Check size={11} strokeWidth={3} />
                   </motion.span>
-                  Opening Mail App
+                  Message Sent
+                </motion.span>
+              ) : status === "error" ? (
+                <motion.span
+                  key="error"
+                  initial={{ y: 24, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -24, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex items-center gap-2"
+                >
+                  Failed — Try Again
+                  <ArrowUpRight size={14} />
                 </motion.span>
               ) : (
                 <motion.span
